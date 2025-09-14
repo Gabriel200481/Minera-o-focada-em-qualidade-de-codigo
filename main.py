@@ -9,8 +9,7 @@ from scripts.agregador_dados import salvar_resultados_csv
 load_dotenv()
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 if not GITHUB_TOKEN:
-    import getpass
-    GITHUB_TOKEN = getpass.getpass("Digite seu GITHUB_TOKEN: ")
+    GITHUB_TOKEN = input("Digite seu GITHUB_TOKEN: ")
 
 # Caminho para a ferramenta CK. Garanta que o arquivo ck.jar esteja na raiz do projeto.
 CK_JAR_PATH = "ck.jar"
