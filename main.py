@@ -8,6 +8,9 @@ from scripts.agregador_dados import salvar_resultados_csv
 # --- CONFIGURAÇÃO ---
 load_dotenv()
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+if not GITHUB_TOKEN:
+    import getpass
+    GITHUB_TOKEN = getpass.getpass("Digite seu GITHUB_TOKEN: ")
 
 # Caminho para a ferramenta CK. Garanta que o arquivo ck.jar esteja na raiz do projeto.
 CK_JAR_PATH = "ck.jar"
@@ -19,7 +22,7 @@ CK_RESULTS_DIR = "resultados_ck" # Diretório para resultados do CK
 FINAL_CSV_PATH = os.path.join(OUTPUT_DIR, "repositorios_metricas_ck.csv")
 
 # Quantidade de repositórios a analisar
-LIMIT = 1000 # Altere para a quantidade desejada
+LIMIT = 1 # Altere para a quantidade desejada
 
 def setup_environment():
     """Cria os diretórios necessários para a execução do script."""
