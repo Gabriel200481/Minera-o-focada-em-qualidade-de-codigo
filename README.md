@@ -88,7 +88,6 @@ Este conjunto de arquivos permite tanto a **reprodução do estudo** quanto a **
 4.  **Execute a Coleta e Análise:**
     -   Execute o pipeline completo através do script principal. Ele irá chamar os outros scripts na ordem correta.
     ```bash
-    # (Exemplo de execução - ajuste conforme seus scripts)
     python scripts/github_collector.py
     bash scripts/ck_runner.sh
     python scripts/data_merger.py
