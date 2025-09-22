@@ -8,9 +8,9 @@
 
 ## 📖 Descrição do Projeto
 
-Este repositório contém os scripts e artefatos desenvolvidos como parte do **LAB02** da disciplina *Laboratório de Experimentação de Software*.
+Este repositório contém os scripts e artefatos desenvolvidos como parte do **LAB02** da disciplina *Laboratório de Experimentação de Software*. 
 
-O objetivo principal do estudo é analisar a relação entre características do processo de desenvolvimento e métricas de qualidade de código em projetos open-source. Para isso, foram coletados dados dos **1.000 repositórios Java mais populares do GitHub**. As métricas de processo (popularidade, maturidade, atividade e tamanho) foram extraídas via API do GitHub, enquanto as métricas de qualidade de código (**CBO, DIT e LCOM**) foram calculadas através da ferramenta de análise estática **CK**.
+O objetivo principal do estudo é analisar a relação entre características do processo de desenvolvimento (popularidade, maturidade, atividade e tamanho) e métricas de qualidade de código em projetos open-source. [cite: 11, 12] [cite_start]Para isso, foram coletados e analisados dados dos **1.000 repositórios Java mais populares do GitHub**, utilizando a ferramenta de análise estática **CK** para obter as métricas de qualidade. 
 
 Este conjunto de arquivos permite tanto a **reprodução do estudo** quanto a **análise detalhada das métricas** obtidas.
 
@@ -33,11 +33,11 @@ Este conjunto de arquivos permite tanto a **reprodução do estudo** quanto a **
 
 ## ✨ Funcionalidades
 
--   Coleta automatizada de métricas de processo (estrelas, idade, releases, etc.) via API do GitHub.
--   Automação da clonagem de repositórios e execução da ferramenta de análise estática CK para extrair métricas de qualidade.
+-   Coleta automatizada de métricas de processo (estrelas, idade, releases, etc.) via API do GitHub. 
+-   Automação da clonagem de repositórios e execução da ferramenta de análise estática CK para extrair métricas de qualidade. 
 -   Processamento e unificação dos dados de diferentes fontes em um único dataset.
 -   Geração de gráficos de correlação (utilizando a biblioteca `seaborn` em Python) para visualização dos resultados.
--   Análise estatística com o teste de correlação de **Spearman** para validar as relações observadas.
+-   Análise estatística para validar as relações observadas.
 
 ---
 
@@ -45,13 +45,12 @@ Este conjunto de arquivos permite tanto a **reprodução do estudo** quanto a **
 
 -   **repository_name**: Nome do repositório.
 -   **stars**: Número de estrelas (Popularidade).
--   **age_years**: Idade do repositório em anos (Maturidade).
--   **releases**: Número total de releases (Atividade).
--   **loc**: Linhas de código (Tamanho).
--   **loc_comments**: Linhas de comentários (Tamanho).
--   **cbo_median**: Mediana do *Coupling Between Objects* para as classes do repositório.
--   **dit_median**: Mediana do *Depth of Inheritance Tree* para as classes do repositório.
--   **lcom_median**: Mediana do *Lack of Cohesion of Methods* para as classes do repositório.
+-   **age_years**: Idade do repositório em anos (Maturidade). 
+-   **releases**: Número total de releases (Atividade). 
+-   **loc**: Linhas de código (Tamanho). 
+-   **cbo_mean**: Média do *Coupling Between Objects* para as classes do repositório. 
+-   **dit_mean**: Média do *Depth of Inheritance Tree* para as classes do repositório. 
+-   **lcom_mean**: Média do *Lack of Cohesion of Methods* para as classes do repositório. 
 
 ---
 
@@ -86,7 +85,7 @@ Este conjunto de arquivos permite tanto a **reprodução do estudo** quanto a **
     -   Substitua `"SEU_TOKEN_AQUI"` pelo seu token do GitHub.
 
 4.  **Execute a Coleta e Análise:**
-    -   Execute o pipeline completo através do script principal. Ele irá chamar os outros scripts na ordem correta.
+    -   Execute o pipeline completo. Os scripts irão coletar os dados, executar a análise estática e unificar os resultados.
     ```bash
     python scripts/github_collector.py
     bash scripts/ck_runner.sh
@@ -98,33 +97,33 @@ Este conjunto de arquivos permite tanto a **reprodução do estudo** quanto a **
 
 ## 📈 Relatório Técnico (Resumo dos Resultados)
 
-A análise dos dados, baseada no coeficiente de correlação de **Spearman**, revelou os seguintes insights sobre a relação entre as características dos repositórios e a sua qualidade de código.
+A análise dos 1.000 repositórios Java mais populares revelou as seguintes conclusões, confirmando ou refutando as hipóteses iniciais do estudo.
 
-| Questão de Pesquisa (RQ) | Relação Analisada | Coeficiente (ρ) | Hipótese e Resultado |
+| Questão de Pesquisa (RQ) | Relação Analisada | Resultado Qualitativo | Conclusão do Relatório |
 | :--- | :--- | :---: | :--- |
-| **RQ 01: Popularidade** | `stars` vs. Qualidade (`CBO`/`LCOM` ↓) | **~ -0.25** | **Hipótese Confirmada (fraca)**: Repositórios mais populares tendem a ter uma qualidade de código *ligeiramente* melhor (menor acoplamento e maior coesão), possivelmente devido a maior revisão pela comunidade. |
-| **RQ 02: Maturidade** | `age_years` vs. Qualidade (`CBO`/`LCOM` ↓) | **~ +0.15** | **Hipótese Refutada**: Projetos mais antigos, por si sós, tendem a acumular débitos técnicos, mostrando uma qualidade *ligeiramente* inferior. A manutenção ativa é um fator mais decisivo que a idade. |
-| **RQ 03: Atividade** | `releases` vs. Qualidade (`CBO`/`LCOM` ↓) | **~ -0.30** | **Hipótese Confirmada (fraca)**: Uma maior frequência de releases correlaciona-se com melhor qualidade, sugerindo que processos de CI/CD maduros e entregas incrementais favorecem a manutenibilidade. |
-| **RQ 04: Tamanho** | `loc` vs. Qualidade (`CBO`/`LCOM` ↑) | **~ +0.65** | **Hipótese Confirmada (forte)**: O tamanho do repositório é o preditor mais forte de baixa qualidade. Quanto maior a base de código (LOC), maior o acoplamento (CBO) e a falta de coesão (LCOM). |
+| **RQ 01: Popularidade** | `Popularidade (estrelas) ↑` vs. `Qualidade ↑` | **Correlação Positiva** | **Hipótese Confirmada**. [cite_start]Repositórios mais populares (Quartil 4) apresentam menor acoplamento (CBO), menor profundidade de herança (DIT) e maior coesão (menor LCOM) em comparação com os menos populares (Quartil 1), sugerindo que o escrutínio da comunidade leva a melhorias contínuas. [cite: 53, 54, 55] |
+| **RQ 02: Maturidade** | `Maturidade (idade) ↑` vs. `Qualidade ↑` | **Correlação Positiva** | **Hipótese Confirmada Parcialmente**. [cite_start]Projetos mais maduros e veteranos demonstram melhor qualidade de código (CBO e LCOM menores) do que projetos jovens, indicando que o processo evolutivo tende a refinar a qualidade ao longo do tempo. [cite: 60] |
+| **RQ 03: Atividade** | `Atividade (releases) ↑` vs. `Qualidade ↑` | **Correlação Positiva Moderada** | **Hipótese Confirmada Parcialmente**. Um número maior de releases está associado a uma melhoria moderada nas métricas de qualidade. [cite_start]Projetos com atividade "Muito Alta" são consistentemente melhores que os de "Baixa" atividade, apoiando a ideia de que processos de desenvolvimento ativos incluem controle de qualidade. [cite: 65, 66] |
+| **RQ 04: Tamanho** | `Tamanho (LOC) ↑` vs. `Qualidade ↓` | **Correlação Negativa Forte** | **Hipótese Confirmada**. O tamanho do código é o fator com o maior impacto negativo na qualidade. [cite_start]Repositórios "Muito Grandes" (>200K LOC) apresentam acoplamento (CBO) quase 90% maior e falta de coesão (LCOM) 45% maior que os "Pequenos" (<10K LOC), evidenciando os desafios de manutenção em larga escala. [cite: 71, 72, 75] |
 
-> **Nota**: A análise de correlação não implica causalidade. Os resultados completos e os gráficos de dispersão estão detalhados no `RelatorioFinal.pdf`.
+> **Nota**: Os dados completos e a metodologia detalhada da análise podem ser encontrados no ficheiro `RelatorioFinal.pdf`. [cite: 1]
 
 ---
 
 ## ⚖️ Licença
 
-Este projeto está sob a licença **MIT**. Veja o ficheiro `LICENSE.md` para mais detalhes.
+Este projeto está sob a licença **MIT**.
 
 ---
 
 ## 👥 Autores
 
+* Rafael de Paiva Gomes
+* Raphaella Cristina Sacramento
 * Gabriel Afonso Infante Vieira
 
-* Rafael de Paiva Gomes
-
-* Rafaella Cristina de Sousa Sacramento
-
 ---
+
+<p align="center"><em>Projeto desenvolvido para a disciplina de Medição e Experimentação de Software [cite: 3]</em></p>
 
 <p align="center"><em>Projeto desenvolvido para a disciplina de Laboratório de Experimentação de Software</em></p>
